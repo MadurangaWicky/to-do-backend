@@ -58,6 +58,13 @@ public class UserController {
         return ResponseEntity.ok().body(success);
     }
 
+    @PutMapping("/card-limit/{limit}")
+    public ResponseEntity<AuthSuccessDTO> updateCardLimit(@PathVariable int limit, @AuthenticationPrincipal User user){
+        User updatedUser = userService.updateCardLimit(limit, user);
+        AuthSuccessDTO success = new AuthSuccessDTO(true, updatedUser);
+        return ResponseEntity.ok().body(success);
+    }
+
 
     @GetMapping("/test")
     public String test() {
