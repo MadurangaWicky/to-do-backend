@@ -3,9 +3,9 @@ package com.coveragex.todoapplication.dto.request;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserUpdateRequestDTO {
-
-    @NotBlank(message = "Name is required")
     private String name;
+
+    private int cardListLimit;
 
     public String getName() {
         return name;

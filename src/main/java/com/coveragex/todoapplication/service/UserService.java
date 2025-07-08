@@ -11,9 +11,11 @@ import com.coveragex.todoapplication.utility.errorcode.CommonErrorCodes;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private ApplicationContext context;
+
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
@@ -152,7 +158,7 @@ public class UserService {
             User existingUser = existingUserOptional.get();
             existingUser.setName(userUpdateRequestDTO.getName());
             userRepository.save(existingUser);
-            updateUserCache(existingUser);
+            context.getBean(UserService.class).updateUserCache(existingUser);
             return existingUser;
         }
         catch (CustomException e) {
@@ -172,7 +178,7 @@ public class UserService {
             }
             User existingUser = existingUserOptional.get();
             userRepository.delete(existingUser);
-            deleteUserCache(username);
+            context.getBean(UserService.class).deleteUserCache(username);
 
             Cookie accessTokenCookie = new Cookie("accessToken", null);
             accessTokenCookie.setMaxAge(0);
@@ -198,6 +204,28 @@ public class UserService {
         }
     }
 
+    public User updateCardLimit(int limit, User user) {
+        try {
+            logger.info("Update card limit for the user: {}", user.getUsername());
+            Optional<User> existingUserOptional = userRepository.findByUsername(user.getUsername());
+            if (existingUserOptional.isEmpty()) {
+                throw new CustomException(CommonErrorCodes.USER_NOT_FOUND_ERROR_CODE, "User not found");
+            }
+            User existingUser = existingUserOptional.get();
+            existingUser.setCardListLimit(limit);
+            userRepository.save(existingUser);
+            context.getBean(UserService.class).updateUserCache(existingUser);
+            return existingUser;
+        }
+        catch (CustomException e) {
+            throw e;
+        }
+        catch (Exception e) {
+            throw new CustomException(CommonErrorCodes.INTERNAL_SERVER_ERROR, "Internal Server Error");
+        }
+
+    }
+
 
     @Cacheable(value = "userCache", key = "#username")
     public User getUserByUsername(String username) {
@@ -209,6 +237,7 @@ public class UserService {
     @CachePut(value = "userCache", key = "#updatedUser.username")
     public User updateUserCache(User updatedUser) {
         logger.info("Update cache for the user: {}", updatedUser.getUsername());
+        logger.info(updatedUser.toString());
         return updatedUser;
     }
 
