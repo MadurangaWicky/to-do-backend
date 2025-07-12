@@ -108,7 +108,8 @@ public class JWTFilter extends OncePerRequestFilter {
                 newAccessTokenCookie.setPath("/");
                 newAccessTokenCookie.setMaxAge(60 * 60);
                 newAccessTokenCookie.setHttpOnly(true);
-                newAccessTokenCookie.setSecure(true);
+                newAccessTokenCookie.setSecure(false);
+                newAccessTokenCookie.setAttribute("SameSite", "None");
                 response.addCookie(newAccessTokenCookie);
                 logger.info("New access token generated and set in cookie");
             }

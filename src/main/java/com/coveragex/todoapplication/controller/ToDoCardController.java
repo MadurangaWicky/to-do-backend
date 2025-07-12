@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(
+        originPatterns = "*",
+        allowCredentials = "true"
+)
+
 @RestController
 @RequestMapping(path = "api/todo-card")
 public class ToDoCardController {

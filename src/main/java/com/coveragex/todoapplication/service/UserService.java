@@ -65,13 +65,15 @@ public class UserService {
             Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setMaxAge(60 * 60);
-            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setSecure(false);
+            accessTokenCookie.setAttribute("SameSite", "None");
             accessTokenCookie.setHttpOnly(true);
 
             Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
             refreshTokenCookie.setPath("/");
             refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);
-            refreshTokenCookie.setSecure(true);
+            refreshTokenCookie.setSecure(false);
+            refreshTokenCookie.setAttribute("SameSite", "None");
             refreshTokenCookie.setHttpOnly(true);
 
             response.addCookie(accessTokenCookie);
@@ -104,13 +106,15 @@ public class UserService {
             Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setMaxAge(60 * 60);
-            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setSecure(false);
+            accessTokenCookie.setAttribute("SameSite", "None");
             accessTokenCookie.setHttpOnly(true);
 
             Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken);
             refreshTokenCookie.setPath("/");
             refreshTokenCookie.setMaxAge(60 * 60 * 24 * 7);
-            refreshTokenCookie.setSecure(true);
+            refreshTokenCookie.setSecure(false);
+            refreshTokenCookie.setAttribute("SameSite", "None");
             refreshTokenCookie.setHttpOnly(true);
 
             response.addCookie(accessTokenCookie);
@@ -133,13 +137,15 @@ public class UserService {
             accessTokenCookie.setMaxAge(0);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setSecure(false);
+            accessTokenCookie.setAttribute("SameSite", "None");
 
             Cookie refreshTokenCookie = new Cookie("refreshToken", null);
             refreshTokenCookie.setMaxAge(0);
             refreshTokenCookie.setPath("/");
             refreshTokenCookie.setHttpOnly(true);
-            refreshTokenCookie.setSecure(true);
+            refreshTokenCookie.setSecure(false);
+            refreshTokenCookie.setAttribute("SameSite", "None");
 
             response.addCookie(accessTokenCookie);
             response.addCookie(refreshTokenCookie);
@@ -184,13 +190,15 @@ public class UserService {
             accessTokenCookie.setMaxAge(0);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(true);
+            accessTokenCookie.setSecure(false);
+            accessTokenCookie.setAttribute("SameSite", "None");
 
             Cookie refreshTokenCookie = new Cookie("refreshToken", null);
             refreshTokenCookie.setMaxAge(0);
             refreshTokenCookie.setPath("/");
             refreshTokenCookie.setHttpOnly(true);
-            refreshTokenCookie.setSecure(true);
+            refreshTokenCookie.setSecure(false);
+            refreshTokenCookie.setAttribute("SameSite", "None");
 
             response.addCookie(accessTokenCookie);
             response.addCookie(refreshTokenCookie);
