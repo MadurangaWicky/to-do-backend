@@ -65,6 +65,15 @@ public class UserController {
         return ResponseEntity.ok().body(success);
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal User user) {
+        User safeUser = new User();
+        safeUser.setId(user.getId());
+        safeUser.setUsername(user.getUsername());
+        safeUser.setName(user.getName());
+        safeUser.setCardListLimit(user.getCardListLimit());
+        return ResponseEntity.ok().body(safeUser);
+    }
 
     @GetMapping("/test")
     public String test() {
